@@ -5,10 +5,11 @@ import DiscoverPage from "../components/DiscoverPage";
 function ContentRouter(props) {
   const [state, setState] = useState();
   return (
-    <Switch>
-      <Route path="/discover" component={<DiscoverPage />} />
-      <Route path="/" component={<SelectionPage />} />
-    </Switch>
+    <h1>Skąd tu?</h1>
+    // <Switch>
+    //   <Route path="/discover" component={<DiscoverPage />} />
+    //   <Route path="/" component={<SelectionPage />} />
+    // </Switch>
   );
 }
 

@@ -1,13 +1,14 @@
-import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
 import Header from "./components/Header";
 import SelectionPage from "./components/SelectionPage";
+import ContentRouter from "./routing/router";
 
 function App() {
   return (
     <div>
       <Header />
-      <SelectionPage />
+      <ContentRouter />
     </div>
   );
 }
