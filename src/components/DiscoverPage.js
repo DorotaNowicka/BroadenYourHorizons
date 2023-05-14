@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import GetRandomCountries from "../api/GetRandomCountries";
 
 function DiscoverPage(props) {
   const location = useLocation();
-  console.log(location.state);
+  const randomCountries = GetRandomCountries(
+    location.state.continent,
+    location.state.number
+  );
+  if (randomCountries) {
+    if (randomCountries.type != "object") {
+      console.log("tu");
+    }
+  }
 
-  return <h1>{location.state ? location.state.continent : "Go to Home"}</h1>;
+  console.log("randomCountries:", randomCountries);
+  const [details, setDetails] = useState();
+  return <h1>{location.state ? "Udało się" : "Go to Home"}</h1>;
 }
 
 export default DiscoverPage;
