@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { redirect, useNavigate } from "react-router-dom";
+import { redirect, useNavigate, useSearchParams } from "react-router-dom";
 
 import Button from "./Button";
 import continents from "../assets/continents";
 
 const SelectionPage = () => {
   const navigate = useNavigate();
+  const [selectedParams, setSelectedParams] = useSearchParams();
   const [selectedContinent, setSelectedContinent] = useState("");
   const [selectedNumber, setSelectedNumber] = useState("");
 
@@ -36,7 +37,8 @@ const SelectionPage = () => {
         console.log("Form values:", values);
         setSelectedContinent(values.continent);
         setSelectedNumber(values.number);
-        navigate("/discover");
+        // setSelectedParams(values);
+        navigate("/discover", { state: values });
       } catch (ex) {
         // if (ex.response && ex.response.status === 400) {
         //   const errors = { ...this.state.errors };
