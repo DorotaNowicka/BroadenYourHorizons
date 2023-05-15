@@ -55,10 +55,9 @@ function getMultipleRandom(arr, num) {
 function DiscoverPage(props) {
   const location = useLocation();
   const continent = location.state.continent;
-  const number = location.state.number;
   const symbol = continentsSymbol.filter((item) => item.code === continent)[0]
     .restName;
-
+  console.log(symbol);
   const [countryItems, initCountry] = useState([]);
   const [randomCountries, setRandomCountries] = useState(
     getMultipleRandom(
@@ -82,6 +81,7 @@ function DiscoverPage(props) {
     fetchData()
       .then((res) => {
         initCountry(res);
+        console.log(res);
       })
       .catch((e) => {
         console.log(e.message);
@@ -91,9 +91,10 @@ function DiscoverPage(props) {
   return (
     <div>
       <h1>Country Details</h1>
-      {getMultipleRandom(countryItems, number).map((item) => {
-        return <CountryInfoTable country={item} />;
+      {countryItems.map((item) => {
+        return <h1 key={item.name.common}>{item.name.common}</h1>;
       })}
+      {/* <CountryInfoTable country={countryItems[0]} /> */}
     </div>
   );
 }
