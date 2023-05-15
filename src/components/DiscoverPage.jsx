@@ -82,6 +82,7 @@ function DiscoverPage(props) {
     fetchData()
       .then((res) => {
         initCountry(res);
+        console.log(getMultipleRandom(res, number));
       })
       .catch((e) => {
         console.log(e.message);
@@ -89,10 +90,14 @@ function DiscoverPage(props) {
   }, []);
 
   return (
-    <div>
-      <h1>Country Details</h1>
+    <div className="DiscoverPage">
+      <h1 style={{ padding: "10px" }}>Country Details</h1>
       {getMultipleRandom(countryItems, number).map((item) => {
-        return <CountryInfoTable country={item} />;
+        return (
+          <div className="TableDetails">
+            <CountryInfoTable key={item.name.common} country={item} />
+          </div>
+        );
       })}
     </div>
   );
