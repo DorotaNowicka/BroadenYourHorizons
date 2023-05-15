@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import SelectionPage from "../components/SelectionPage";
 import DiscoverPage from "../components/DiscoverPage";
 import { createBrowserRouter } from "react-router-dom";
@@ -9,6 +9,10 @@ const ContentRouter = createBrowserRouter([
   },
   {
     path: "/discover",
+    element: <DiscoverPage />,
+  },
+  {
+    path: "/*",
     element: <DiscoverPage />,
   },
 ]);

@@ -1,16 +1,9 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  ApolloClient,
-  InMemoryCache,
-  gql,
-  useQuery,
-  useLazyQuery,
-} from "@apollo/client";
+import { gql } from "@apollo/client";
 
-import axios from "axios";
 import CountryInfoTable from "./countryTable";
-import continentsFull from "../assets/continentsFull";
+
 import continentsSymbol from "../assets/continentsSymbol";
 
 const GET_COUNTRIES_BY_CONTINENT = gql`
