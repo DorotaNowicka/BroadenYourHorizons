@@ -6,11 +6,7 @@ import {
   useQuery,
   useLazyQuery,
 } from "@apollo/client";
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  uri: "https://countries.trevorblades.com",
-});
+import client from "./client";
 
 const GetCountries = async (continent) => {
   const [randomCountries, setRandomCountries] = useState(null);
@@ -22,12 +18,13 @@ const GetCountries = async (continent) => {
       }
     }
   `;
+
   const { data } = await client.query({
     query: GET_COUNTRIES_BY_CONTINENT,
     variables: { continentCode: continent },
   });
   setRandomCountries(data.countries);
-  return randomCountries;
+  return { randomCountries };
 };
 
 export default GetCountries;

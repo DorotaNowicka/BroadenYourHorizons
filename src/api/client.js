@@ -1,0 +1,13 @@
+import {
+  ApolloClient,
+  InMemoryCache,
+  gql,
+  useQuery,
+  useLazyQuery,
+  ApolloProvider,
+} from "@apollo/client";
+
+export default new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: "https://countries.trevorblades.com",
+});

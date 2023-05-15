@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { redirect, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Button from "./Button";
 import continents from "../assets/continents";
 
 const SelectionPage = () => {
   const navigate = useNavigate();
-  const [selectedParams, setSelectedParams] = useSearchParams();
   const [selectedContinent, setSelectedContinent] = useState("");
   const [selectedNumber, setSelectedNumber] = useState("");
 
@@ -28,23 +27,13 @@ const SelectionPage = () => {
     },
     validationSchema,
     onSubmit: (values) => {
-      // Do something with the form values
-
       try {
-        // const response = await user.register(this.state.data);
-        // auth.loginWithJwt(response.headers["x-auth-token"]);
-        // window.location = "/";
-
         setSelectedContinent(values.continent);
         setSelectedNumber(values.number);
-        // setSelectedParams(values);
+
         navigate("/discover", { state: values });
       } catch (ex) {
-        // if (ex.response && ex.response.status === 400) {
-        //   const errors = { ...this.state.errors };
-        //   errors.username = ex.response.data;
-        //   this.setState({ errors });
-        // }
+        console.log("Error", ex);
       }
     },
   });
