@@ -8,6 +8,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SelectionPage from "./components/SelectionPage";
 import Header from "./components/Header";
 import DiscoverPage from "./components/DiscoverPage";
+import {
+  ApolloClient,
+  InMemoryCache,
+  gql,
+  useQuery,
+  useLazyQuery,
+  ApolloProvider,
+} from "@apollo/client";
 
 const router = createBrowserRouter([
   {
@@ -20,10 +28,17 @@ const router = createBrowserRouter([
   },
 ]);
 
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: "https://countries.trevorblades.com",
+});
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <Header />
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <ApolloProvider client={client}>
+    <React.StrictMode>
+      <Header />
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  </ApolloProvider>
 );

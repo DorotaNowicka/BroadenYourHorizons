@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { ApolloClient, InMemoryCache, gql, useQuery } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  gql,
+  useQuery,
+  useLazyQuery,
+} from "@apollo/client";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -12,7 +18,8 @@ function getMultipleRandom(arr, num) {
   return shuffled.slice(0, num);
 }
 
-const GetRandomCountries = (continent, number) => {
+const GetRandomCountries = async (continent, number) => {
+  const [randomCountries, setRandomCountries] = useState(null);
   const continentCode = continent;
   console.log("params: ", continent, number);
   const GET_COUNTRIES_BY_CONTINENT = gql`
@@ -22,19 +29,43 @@ const GetRandomCountries = (continent, number) => {
       }
     }
   `;
-  const { data, loading, error } = useQuery(GET_COUNTRIES_BY_CONTINENT, {
-    variables: { continentCode: continent },
-    client,
-  });
+  // const [getProducts, { data, loading, error }] = useLazyQuery(
+  //   GET_COUNTRIES_BY_CONTINENT,
+  //   {
+  //     variables: { continentCode: continent },
+  //     client,
+  //     onCompleted: () =>
+  //       setRandomCountries(
+  //         getMultipleRandom(
+  //           data.countries.map((country) => country.name),
+  //           number
+  //         )
+  //       ),
+  //   }
+  // );
 
-  if (error) {
-    return <p>{error.message}</p>;
+  const getThem = async () => {
+    const { data } = await client.query({
+      query: GET_COUNTRIES_BY_CONTINENT,
+      variables: { continentCode: continent },
+    });
+    setRandomCountries(data.countries);
+  };
+
+  // if (error) {
+  //   return <p>{error.message}</p>;
+  // }
+  if (randomCountries === null) {
+    getThem();
   }
-  if (data) {
-    return getMultipleRandom(
-      data.countries.map((country) => country.name),
-      number
-    );
+  if (randomCountries !== null) {
+    // return getMultipleRandom(
+    //   data.countries.map((country) => country.name),
+    //   number
+    // );
+    console.log("here");
+    console.log(randomCountries);
+    return randomCountries;
   }
 };
 
