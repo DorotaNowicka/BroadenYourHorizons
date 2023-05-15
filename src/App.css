@@ -14,18 +14,53 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #225a61;
+  min-height: 6vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
   font-size: calc(10px + 2vmin);
   color: white;
+  margin: 0;
+  padding-bottom: 15px;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.Button {
+  padding: 10px 15px;
+  border-radius: 3px;
+  border: 0;
+  margin: 10px;
+  background-color: #fd0d69;
+  color: white;
+}
+
+.Button:hover {
+  background-color: #b80046;
+  color: white;
+}
+
+.Button:disabled {
+  background-color: #b80046;
+  color: white;
+}
+
+.DiscoverPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.TableDetails {
+  border-color: #000000;
+  border-width: 10px;
+  padding: 2px;
+  border-radius: 5px;
+  margin-bottom: 3px;
 }
 
 @keyframes App-logo-spin {
