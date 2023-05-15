@@ -34,7 +34,7 @@ const SelectionPage = () => {
         // const response = await user.register(this.state.data);
         // auth.loginWithJwt(response.headers["x-auth-token"]);
         // window.location = "/";
-        console.log("Form values:", values);
+
         setSelectedContinent(values.continent);
         setSelectedNumber(values.number);
         // setSelectedParams(values);
@@ -48,8 +48,9 @@ const SelectionPage = () => {
       }
     },
   });
+
   return (
-    <div>
+    <div className="SelectionPage">
       <form onSubmit={formik.handleSubmit}>
         <div className="continent-selection">
           <h3>Choose continent to explore:</h3>
@@ -76,6 +77,7 @@ const SelectionPage = () => {
             value={formik.values.number}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            className="custom-select"
           >
             {Array.from({ length: 9 }, (_, i) => i + 2).map((num) => (
               <option key={num} value={num}>

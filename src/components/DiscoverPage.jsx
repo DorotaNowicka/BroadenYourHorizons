@@ -60,13 +60,12 @@ function DiscoverPage(props) {
     .restName;
 
   const [countryItems, initCountry] = useState([]);
-  const [randomCountries, setRandomCountries] = useState(
-    getMultipleRandom(
-      continentsFull.filter((cont) => cont.code === continent)[0].countries,
-      2
-    )
-  );
-  const country = "Poland";
+  // const [randomCountries, setRandomCountries] = useState(
+  //   getMultipleRandom(
+  //     continentsFull.filter((cont) => cont.code === continent)[0].countries,
+  //     2
+  //   )
+  // );
 
   const fetchData = async () => {
     const response = await fetch(
@@ -82,7 +81,6 @@ function DiscoverPage(props) {
     fetchData()
       .then((res) => {
         initCountry(res);
-        console.log(getMultipleRandom(res, number));
       })
       .catch((e) => {
         console.log(e.message);
@@ -94,8 +92,8 @@ function DiscoverPage(props) {
       <h1 style={{ padding: "10px" }}>Country Details</h1>
       {getMultipleRandom(countryItems, number).map((item) => {
         return (
-          <div className="TableDetails">
-            <CountryInfoTable key={item.name.common} country={item} />
+          <div className="TableDetails" key={item.name.common}>
+            <CountryInfoTable country={item} />
           </div>
         );
       })}
