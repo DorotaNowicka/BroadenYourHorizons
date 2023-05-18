@@ -96,6 +96,16 @@ code {
   display: none;
 }
 
+.Grid {
+  /* display: grid;
+  grid-template-columns: auto auto auto; */
+  row-gap: 10px;
+  justify-items: center;
+  justify-content: space-evenly;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .select-hide {
   display: none;
 }
@@ -118,7 +128,7 @@ code {
   border-width: 10px;
   padding: 2px;
   border-radius: 5px;
-  margin-bottom: 3px;
+  margin: 3px;
 }
 
 @keyframes App-logo-spin {

@@ -64,13 +64,15 @@ function DiscoverPage(props) {
     <div className="DiscoverPage">
       <h1 style={{ padding: "10px" }}>Country Details</h1>
       {loading && <h2>Loading countries details...</h2>}
-      {getMultipleRandom(countryItems, number).map((item) => {
-        return (
-          <div className="TableDetails" key={item.name.common}>
-            <CountryInfoTable country={item} />
-          </div>
-        );
-      })}
+      <div className="Grid">
+        {getMultipleRandom(countryItems, number).map((item) => {
+          return (
+            <div className="TableDetails" key={item.name.common}>
+              <CountryInfoTable country={item} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
