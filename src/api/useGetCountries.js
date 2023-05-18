@@ -8,7 +8,7 @@ import {
 } from "@apollo/client";
 import client from "./client";
 
-const GetCountries = async (continent) => {
+const useGetCountries = async (continent) => {
   const [randomCountries, setRandomCountries] = useState(null);
 
   const GET_COUNTRIES_BY_CONTINENT = gql`
@@ -19,12 +19,14 @@ const GetCountries = async (continent) => {
     }
   `;
 
-  const { data } = await client.query({
-    query: GET_COUNTRIES_BY_CONTINENT,
-    variables: { continentCode: continent },
-  });
-  setRandomCountries(data.countries);
-  return { randomCountries };
+  const data = client
+    .query({
+      query: GET_COUNTRIES_BY_CONTINENT,
+      variables: { continentCode: continent },
+    })
+    .then((response) => {
+      return response.data ? response.data.countries : "dupa";
+    });
 };
 
-export default GetCountries;
+export default useGetCountries;
