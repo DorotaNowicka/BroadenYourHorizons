@@ -1,7 +1,8 @@
 import React from "react";
-import SelectionPage from "../components/SelectionPage";
-import DiscoverPage from "../components/DiscoverPage";
 import { createBrowserRouter } from "react-router-dom";
+
+import DiscoverPage from "../components/DiscoverPage";
+import SelectionPage from "../components/SelectionPage";
 const ContentRouter = createBrowserRouter([
   {
     path: "/",
@@ -13,7 +14,7 @@ const ContentRouter = createBrowserRouter([
   },
   {
     path: "/*",
-    element: <DiscoverPage />,
+    element: <SelectionPage />,
   },
 ]);
 

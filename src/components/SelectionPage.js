@@ -7,6 +7,7 @@ import Button from "./Button";
 import continents from "../assets/continents";
 
 const SelectionPage = () => {
+  const [chosen, setChosen] = useState("");
   const navigate = useNavigate();
   const [selectedContinent, setSelectedContinent] = useState("");
   const [selectedNumber, setSelectedNumber] = useState("");
@@ -30,7 +31,6 @@ const SelectionPage = () => {
       try {
         setSelectedContinent(values.continent);
         setSelectedNumber(values.number);
-
         navigate("/discover", { state: values });
       } catch (ex) {
         console.log("Error", ex);
@@ -48,7 +48,19 @@ const SelectionPage = () => {
             <Button
               key={continent.code}
               type="button"
-              onClick={() => formik.setFieldValue("continent", continent.code)}
+              style={
+                chosen === continent.code
+                  ? {
+                      backgroundColor: "#225a61",
+                      outline: "2px dashed #225a61",
+                      outlineOffset: "5px",
+                    }
+                  : undefined
+              }
+              onClick={() => {
+                formik.setFieldValue("continent", continent.code);
+                setChosen(continent.code);
+              }}
             >
               {continent.name}
             </Button>

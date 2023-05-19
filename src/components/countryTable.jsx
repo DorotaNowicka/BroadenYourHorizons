@@ -14,7 +14,7 @@ const CountryInfoTable = ({ country }) => {
   return (
     <div>
       <TableContainer component={Paper} className="TableDetails">
-        <Table sx={{ width: 400 }} aria-label="simple table">
+        <Table sx={{ width: 350 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell variant="head" align="center" colSpan={2}>
@@ -29,7 +29,15 @@ const CountryInfoTable = ({ country }) => {
             <TableCell align="right" variant="head">
               Official Name
             </TableCell>
-            <TableCell align="right" component="th" scope="row">
+            <TableCell
+              style={{
+                whiteSpace: "normal",
+                wordWrap: "break-word",
+              }}
+              align="right"
+              component="th"
+              scope="row"
+            >
               {country.name.official}
             </TableCell>
           </TableRow>
@@ -37,7 +45,15 @@ const CountryInfoTable = ({ country }) => {
             <TableCell variant="head" align="right">
               Capital
             </TableCell>
-            <TableCell align="right">{country.capital[0]}</TableCell>
+            <TableCell
+              align="right"
+              style={{
+                whiteSpace: "normal",
+                wordWrap: "break-word",
+              }}
+            >
+              {country.capital.map((capital) => capital)}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell variant="head" align="right">
@@ -50,21 +66,32 @@ const CountryInfoTable = ({ country }) => {
               Currency
             </TableCell>
             <TableCell align="right">
-              {Object.keys(country.currencies)}
+              {Object.keys(country.currencies).map((currency) => {
+                return <span key={currency}> {currency}</span>;
+              })}
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell variant="head" align="right">
-              Subregion
+              Region
             </TableCell>
-            <TableCell align="right">{country.subregion}</TableCell>
+            <TableCell align="right">{country.region}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell variant="head" align="right">
               Languages
             </TableCell>
-            <TableCell align="right">
-              {country.languages[Object.keys(country.languages)[0]]}
+            <TableCell
+              style={{
+                whiteSpace: "normal",
+                wordWrap: "break-word",
+              }}
+              align="right"
+            >
+              {Object.keys(country.languages).map((language) => (
+                <span key={language}> {country.languages[language]}</span>
+              ))}
+              {/* {country.languages[Object.keys(country.languages)[0]]} */}
             </TableCell>
           </TableRow>
         </Table>
