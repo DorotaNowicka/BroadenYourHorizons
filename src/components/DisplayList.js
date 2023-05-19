@@ -21,7 +21,7 @@ function getMultipleRandom(arr, num) {
 
 const fetchData = async (name) => {
   const response = await fetch(
-    `https://restcountries.com/v3.1/name/${name}?fullText=true&fields=name,capital,population,currencies,region,languages`
+    `https://restcountries.com/v3.1/name/${name}?fields=name,capital,population,currencies,region,languages`
   );
   if (!response.ok) {
     throw new Error("Data coud not be fetched!");
@@ -31,12 +31,13 @@ const fetchData = async (name) => {
 };
 
 function DisplayList(props) {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
-  const continent = location.state.continent;
-  const number = location.state.number;
-  console.log(continent, number);
+  const continent = location.state?.continent;
+  const number = location.state?.number;
+  const [tooMany, setTooMany] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [isError, setIsError] = useState(null);
   const [randomCountries, setRandomCountries] = useState({});
   const [countryItems, initCountry] = useState({});
   const {
@@ -47,30 +48,29 @@ function DisplayList(props) {
     variables: { continentCode: continent },
   });
 
+  try {
+    const continent = location.state.continent;
+    const number = location.state.number;
+  } catch (error) {
+    navigate("/");
+  }
+
   useEffect(() => {
-    console.log("0");
     if (!loading && !error) {
       setRandomCountries((randomCountries) => ({
         ...randomCountries,
         countries: countriesFromContinent.countries,
       }));
-      console.log("1", countriesFromContinent.countries);
+
       const chosenCountries = getMultipleRandom(
         countriesFromContinent.countries,
         number
-      ).map((country) => country.name);
-      console.log(chosenCountries);
-
-      // chosenCountries.forEach((country) => {
-      //   fetchData(country)
-      //     .then((res) => {
-      //       countryItems[country] = res[0];
-      //     })
-
-      //     .catch((e) => {
-      //       console.log(e.message);
-      //     });
-      // });
+      )
+        .map((country) => country.name)
+        .sort((a, b) => a.localeCompare(b));
+      if (chosenCountries.length < number) {
+        setTooMany(true);
+      }
 
       Promise.all(chosenCountries.map((country) => fetchData(country)))
         .then((responses) => {
@@ -84,18 +84,13 @@ function DisplayList(props) {
           }));
         })
         .catch((e) => {
-          console.log(e.message);
+          setIsError("Error occoured. Try again.");
         });
 
-      // console.log("keys", Object.keys(countryItems));
-
       setIsReady(true);
-      console.log("CI", countryItems);
-      console.log("ready", isReady);
     }
     return () => {
-      console.log("na koniec", countryItems, Object.keys(countryItems));
-      console.log("cleaned");
+      setIsError(null);
     };
   }, [loading, error, countriesFromContinent]);
 
@@ -105,7 +100,10 @@ function DisplayList(props) {
 
   return (
     <div className="DiscoverPage">
-      <h1 style={{ padding: "10px" }}>Country Details</h1>
+      {tooMany ? (
+        <h3>This continent has less coutries than you choose.</h3>
+      ) : null}
+      {isError ? <h3>{isError}</h3> : null}
       {!isReady ? (
         <h2>Loading countries details...</h2>
       ) : (
