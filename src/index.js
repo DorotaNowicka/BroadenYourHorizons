@@ -9,7 +9,6 @@ import "./index.css";
 import client from "./api/client";
 import ContentRouter from "./routing/router";
 import Header from "./components/Header";
-import DisplayList from "./components/DiscoverPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

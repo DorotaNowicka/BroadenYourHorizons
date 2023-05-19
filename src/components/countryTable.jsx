@@ -14,7 +14,7 @@ const CountryInfoTable = ({ country }) => {
   return (
     <div>
       <TableContainer component={Paper} className="TableDetails">
-        <Table sx={{ width: 400 }} aria-label="simple table">
+        <Table sx={{ width: 350 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell variant="head" align="center" colSpan={2}>

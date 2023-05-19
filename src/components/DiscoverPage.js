@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import CountryInfoTable from "./countryTable";
+import GET_COUNTRIES_BY_CONTINENT from "../api/query";
 
-const GET_COUNTRIES_BY_CONTINENT = gql`
-  query GetCountriesByContinent($continentCode: String!) {
-    countries(filter: { continent: { eq: $continentCode } }) {
-      name
-    }
-  }
-`;
+// const GET_COUNTRIES_BY_CONTINENT = gql`
+//   query GetCountriesByContinent($continentCode: String!) {
+//     countries(filter: { continent: { eq: $continentCode } }) {
+//       name
+//     }
+//   }
+// `;
 
 function getMultipleRandom(arr, num) {
   const shuffled = [...arr].sort(() => 0.5 - Math.random());
@@ -37,7 +38,6 @@ function DiscoverPage(props) {
   const [tooMany, setTooMany] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isError, setIsError] = useState(null);
-  const [randomCountries, setRandomCountries] = useState({});
   const [countryItems, initCountry] = useState({});
   const {
     data: countriesFromContinent,
@@ -56,11 +56,6 @@ function DiscoverPage(props) {
 
   useEffect(() => {
     if (!loading && !error) {
-      setRandomCountries((randomCountries) => ({
-        ...randomCountries,
-        countries: countriesFromContinent.countries,
-      }));
-
       const chosenCountries = getMultipleRandom(
         countriesFromContinent.countries,
         number
@@ -91,21 +86,21 @@ function DiscoverPage(props) {
     return () => {
       setIsError(null);
     };
-  }, [loading, error, countriesFromContinent]);
+  }, [loading, error, countriesFromContinent, number]);
 
-  if (loading || error) {
-    return <h1>Loading....</h1>;
+  if (loading || error || !isReady) {
+    return (
+      <div className="loader-container">
+        <div className="spinner"></div>
+      </div>
+    );
   }
 
   return (
     <div className="DiscoverPage">
-      {tooMany ? (
-        <h3>This continent has less coutries than you choose.</h3>
-      ) : null}
-      {isError ? <h3>{isError}</h3> : null}
-      {!isReady ? (
-        <h2>Loading countries details...</h2>
-      ) : (
+      {tooMany && <h3>This continent has less coutries than you choose.</h3>}
+      {isError && <h3>{isError}</h3>}
+      {
         <div className="Grid">
           {Object.keys(countryItems).map((item) => {
             return (
@@ -115,7 +110,7 @@ function DiscoverPage(props) {
             );
           })}
         </div>
-      )}
+      }
     </div>
   );
 }
