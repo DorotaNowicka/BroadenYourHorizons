@@ -1,11 +1,4 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  gql,
-  useQuery,
-  useLazyQuery,
-  ApolloProvider,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 
 export default new ApolloClient({
   cache: new InMemoryCache(),

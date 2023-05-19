@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import useGetCountries from "../api/useGetCountries";
-import { ApolloClient, InMemoryCache, gql, useQuery } from "@apollo/client";
-import CountryInfoTable from "./countryTable";
-import { key } from "localforage";
+import { gql, useQuery } from "@apollo/client";
 import { useLocation, useNavigate } from "react-router-dom";
+
+import CountryInfoTable from "./countryTable";
 
 const GET_COUNTRIES_BY_CONTINENT = gql`
   query GetCountriesByContinent($continentCode: String!) {
@@ -30,7 +29,7 @@ const fetchData = async (name) => {
   }
 };
 
-function DisplayList(props) {
+function DiscoverPage(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const continent = location.state?.continent;
@@ -121,4 +120,4 @@ function DisplayList(props) {
   );
 }
 
-export default DisplayList;
+export default DiscoverPage;
